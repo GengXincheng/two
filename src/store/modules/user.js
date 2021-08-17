@@ -6,7 +6,7 @@ const getDefaultState = () => {
   return {
     token: getToken(),//成功的token
     name: '',//获取用户信息保存用户信息的名称
-    avatar: ''//头像
+    avatar: ''//用户头像头像
   }
 }
 
@@ -69,7 +69,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         removeToken() // must remove  token  first
-        resetRouter()
+        resetRouter()  //重置路由器
         commit('RESET_STATE')
         resolve()
       }).catch(error => {

@@ -1,4 +1,4 @@
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie'//操作token的库
 
 const TokenKey = 'vue_admin_template_token'
 
