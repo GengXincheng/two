@@ -49,10 +49,45 @@ export const constantRoutes = [
     redirect: '/dashboard',
     children: [{
       path: 'dashboard',
-      name: '首页',
+      name: 'Dashboard',//路由得有名字
       component: () => import('@/views/dashboard/index'),
       meta: { title: '首页', icon: 'dashboard' }
     }]
+  },
+  //配置商品管理      这里写完之后     panjiachen会动态生成路由
+  {
+    path:"/product",
+    component: Layout,
+    redirect:"/product/trademark/list",
+    name:'Product',
+    meta: { title: '商品管理', icon: 'dashboard' },
+
+    children:[
+      {
+        path:'trademark/list',
+        component:()=>import('@/views/product/trademark/List'),
+        name:"Trademark",
+        meta:{ title:'品牌管理' }
+      }, 
+      {
+        path:'attr/list',
+        component:()=>import('@/views/product/attr/List'),
+        name:"Attr",
+        meta:{ title:'平台属性管理' }
+      }, 
+      {
+        path:'spu/list',
+        component:()=>import('@/views/product/spu/List'),
+        name:"Spu",
+        meta:{ title:'spu管理' }
+      }, 
+      {
+        path:'sku/list',
+        component:()=>import('@/views/product/sku/List'),
+        name:"Sku",
+        meta:{ title:'sku管理' }
+      }, 
+    ]
   },
 
   {
