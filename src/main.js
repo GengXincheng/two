@@ -14,7 +14,11 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
-
+// import trademark from './api/product/trademark'
+import * as API from '@/api/product'
+Vue.prototype.$API = API
+//挂到vue的原型身上
+// Vue.prototype.$API = trademark    //只能拿到trademar相关的appi
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
