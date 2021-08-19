@@ -16,6 +16,9 @@ import '@/icons' // icon
 import '@/permission' // permission control
 // import trademark from './api/product/trademark'
 import * as API from '@/api/product'
+// import CategorySelector from '@/components/CategorySelector'
+import CategorySelector from '@/components/CategorySelector'
+
 Vue.prototype.$API = API
 //挂到vue的原型身上
 // Vue.prototype.$API = trademark    //只能拿到trademar相关的appi
@@ -38,7 +41,8 @@ Vue.use(ElementUI, { locale })
 // Vue.use(ElementUI)
 
 Vue.config.productionTip = false
-
+//全局注册
+Vue.component('CategorySelector',CategorySelector)
 new Vue({
   el: '#app',
   router,

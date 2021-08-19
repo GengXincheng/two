@@ -4,3 +4,4 @@
 //引入并暴露   这个不能简写
 export {default as trademark} from './trademark'
 export {default as attr} from './attr'
+export {default as category} from './category'
