@@ -157,13 +157,18 @@ export default {
       this.attrForm.attrValueList.push({
         attrId:this.attrForm.id,
         // id:0,   新添加的属性值没有id
-        valueName:""
+        valueName:"",
+        isEdit:true,//编辑模式
       })
     },
     //点击修改属性按钮   
     shoeUpdataDiv(row){
       this.isShoeList = false
       this.attrForm = cloneDeep(row) //浅拷贝搞不定了   里面有一个数组
+      //修改属性值当中已经存在了  属性  双击可编辑
+   //   this.attrForm.attrValueList.forEach(item => item.isEdit = false)    不是响应式属性
+      //修改属性值当中已经存在了  属性  双击可编辑
+     this.attrForm.attrValueList.forEach(item => this.$set(item,"isEdit",false))    
     },
   }
 };
