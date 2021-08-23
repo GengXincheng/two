@@ -37,7 +37,7 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    // before: require('./mock/mock-server.js')   使用的磨课数据
+     before: require('./mock/mock-server.js') ,  //使用的磨课数据
     proxy: {
       "/dev-api": {
         target: "http://39.98.123.211",

@@ -109,7 +109,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-button type="primary" >保存</el-button>
+        <el-button type="primary" @click="save">保存</el-button>
         <el-button type="primary" @click="isShoeList = true">取消</el-button>
       </div>
     </el-card>
