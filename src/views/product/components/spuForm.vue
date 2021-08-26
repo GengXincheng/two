@@ -1,15 +1,15 @@
 <template>
   <div>
-    <el-form ref="form" :model="spuInfo" label-width="100px">
+    <el-form ref="form" :model="spuForm" label-width="100px">
       <el-form-item label="spu名称" label-width="100px">
         <el-input
-          v-model="spuInfo.spuName"
+          v-model="spuForm.spuName"
           placeholder="spu名称"
           style="width='100px'"
         ></el-input>
       </el-form-item>
       <el-form-item label="品牌" label-width="100px">
-        <el-select v-model="spuInfo.tmId" placeholder="选择品牌">
+        <el-select v-model="spuForm.tmId" placeholder="选择品牌">
           <el-option
             :label="tm.tmName"
             v-for="(tm, index) in trademarkList"
@@ -21,7 +21,7 @@
       </el-form-item>
       <el-form-item label="spu描述" label-width="100px">
         <el-input
-          v-model="spuInfo.description"
+          v-model="spuForm.description"
           placeholder="spu描述"
           type="textarea"
         ></el-input>
@@ -62,7 +62,7 @@
       <el-table
         style="width: 100%"
         label-width="100px"
-        :data="spuInfo.spuSaleAttrList"
+        :data="spuForm.spuSaleAttrList"
       >
         <el-table-column type="index" label="序号" width="80" align="center">
         </el-table-column>
@@ -105,7 +105,7 @@
             <HintButton
               type="danger"
               icon="el-icon-delete"
-              @click="spuInfo.spuSaleAttrList.splice($index, 1)"
+              @click="spuForm.spuSaleAttrList.splice($index, 1)"
             >
             </HintButton>
           </template>
@@ -134,7 +134,7 @@ export default {
       dialogImageUrl: "",
       dialogVisible: false,
       
-      spuInfo: {
+      spuForm: {
         category3Id: "",
         description: "",
         // id: 2915,
@@ -179,7 +179,7 @@ export default {
       const result = await this.$API.spu.get(row.id);
       // console.log(result);
       if (result.code === 200) {
-        this.spuInfo = result.data;
+        this.spuForm = result.data;
       }
       const Imageresult = await this.$API.sku.getSpuImageList(row.id);
       if (Imageresult.code === 200) {
@@ -220,7 +220,7 @@ export default {
         saleAttrName,
         spuSaleAttrValueList: []
       };
-      this.spuInfo.spuSaleAttrList.push(obj);
+      this.spuForm.spuSaleAttrList.push(obj);
       this.unUseSaleAttrIdName = "";
     },
     //是区域焦点的回调
@@ -256,9 +256,9 @@ export default {
     //保存按钮  添加或者修改
     async save() {
       //获取参数
-      let { spuInfo, spuImageList, category3Id } = this;
+      let { spuForm, spuImageList, category3Id } = this;
       //整理参数
-      spuInfo.category3Id = category3Id;
+      spuForm.category3Id = category3Id;
       let spuImageLis = spuImageList.map(item => {
         return {
           imgName: item.name,
@@ -266,16 +266,16 @@ export default {
         };
       });
       console.log(spuImageLis);
-      spuInfo.spuImageList = spuImageLis;
-      // spuInfo.tmId = this.spuForm.tmId;/
+      spuForm.spuImageList = spuImageLis;
+      // spuForm.tmId = this.spuForm.tmId;/
 
-      spuInfo.spuSaleAttrList.forEach(item => {
+      spuForm.spuSaleAttrList.forEach(item => {
         delete item.inputVisible;
         delete item.inputValue;
       });
       //发送请求
       try {
-       await this.$API.spu.addUpdate(spuInfo)
+       await this.$API.spu.addUpdate(spuForm)
         this.$message.success("成功");
         //返回到列表页
         this.$emit("updata:visable", false);
@@ -295,7 +295,7 @@ export default {
       this.dialogImageUrl = "";
       this.dialogVisible = false;
      
-      this.spuInfo = {
+      this.spuForm = {
         category3Id: "",
         description: "",
 
@@ -312,12 +312,12 @@ export default {
   computed: {
     //根据所有的销售属性列表和spu
     //
-    //从saleAttrList: [](总的)  中过滤spuInfo.spuSaleAttrList没有的
+    //从saleAttrList: [](总的)  中过滤spuForm.spuSaleAttrList没有的
     // 过滤失败,
     unUseSaleAttrList() {
       //三个return少了任何一个都不可以
       return this.saleAttrList.filter(item => {
-        return this.spuInfo.spuSaleAttrList.every(spuSaleAttr => {
+        return this.spuForm.spuSaleAttrList.every(spuSaleAttr => {
           // console.log(spuSaleAttr.saleAttrName);
           // console.log(item.name);
           // console.log(spuSaleAttr.saleAttrName !== item.name);
