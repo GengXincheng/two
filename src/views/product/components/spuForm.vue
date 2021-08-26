@@ -275,7 +275,7 @@ export default {
       });
       //发送请求
       try {
-        await this.$API.spu.addUpdate(spuInfo);
+       await this.$API.spu.addUpdate(spuInfo)
         this.$message.success("成功");
         //返回到列表页
         this.$emit("updata:visable", false);
