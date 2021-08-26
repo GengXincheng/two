@@ -65,6 +65,7 @@
         v-show="isShowSpuForm"
         ref="spu"
         :visible.sync="isShowSpuForm"
+        @backSuccess="backSuccess"
       ></spuForm>
       <!-- sku添加页面 -->
       <skuForm v-show="isShowSkuForm"></skuForm>
@@ -83,6 +84,7 @@ export default {
   },
   data() {
     return {
+      flag: "",
       categary1Id: "",
       categary2Id: "",
       categary3Id: "",
@@ -135,17 +137,28 @@ export default {
     //显示添加spuform的回调
     showAddSpuForm() {
       this.isShowSpuForm = true;
-      this.$refs.spu.getAddspuFormInitdata();
+      this.$refs.spu.getAddspuFormInitdata(this.categary3Id);
     },
     //点击修改spu的回调,显示spu的修改页面
     showUpdataSpuForm(row) {
+      this.flag = row.id;
       this.isShowSpuForm = true;
       //通过this.refs拿到子组件对象   调用子组件里的方法
-      this.$refs.spu.getUpdataspuFormInitdata(row);
+      this.$refs.spu.getUpdataspuFormInitdata(row, this.categary3Id);
     },
     //点击添加sku的回调
     showAddSkuForm(row) {
       this.isShowSkuForm = true;
+    },
+    //保存spu成功
+    backSuccess() {
+      if (this.flag) {
+        this.getSpuList(this.page);
+      } else {
+        this.getSpuList();
+      }
+      // 重置标志位
+      this.flag = null
     }
   }
 };
