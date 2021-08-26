@@ -46,14 +46,45 @@
         </el-select>
       </el-form-item>
       <el-button type="primary">添加销售属性</el-button>
-      <el-table style="width: 100%" label-width="100px">
+      <el-table
+        style="width: 100%"
+        label-width="100px"
+        :data="spuInfo.spuSaleAttrList"
+      >
         <el-table-column type="index" label="序号" width="80" align="center">
         </el-table-column>
-        <el-table-column prop="prop" label="属性名" width="150">
+        <el-table-column prop="saleAttrName" label="属性名" width="150">
         </el-table-column>
         <el-table-column prop="prop" label="属性名称列表" width="width">
+          <template slot-scope="{ row, $index }">
+            <!--   @close="handleClose(tag)"    @keyup.enter="handleInputConfirm"
+              @blur="handleInputConfirm"   @click="showInput"  -->
+            <el-tag
+              :key="sale.id"
+              v-for="(sale, index) in row.spuSaleAttrValueList"
+              closable
+              :disable-transitions="false"
+            >
+              {{ sale.saleAttrValueName }}
+            </el-tag>
+
+            <el-input
+              class="input-new-tag"
+              v-if="row.inputVisible"
+              v-model="row.inputValue"
+              ref="saveTagInput"
+              size="small"
+            >
+            </el-input>
+            <el-button v-else class="button-new-tag" size="small"
+              >+ New Tag</el-button
+            >
+          </template>
         </el-table-column>
         <el-table-column prop="prop" label="操作" width="150">
+          <template slot-scope="{ row, $index }">
+            <HintButton type="danger" icon="el-icon-delete"> </HintButton>
+          </template>
         </el-table-column>
       </el-table>
       <el-form-item label-width="100px">
@@ -63,6 +94,7 @@
         >
       </el-form-item>
     </el-form>
+    <!-- <el-input v-model="unUseSaleAttrList" placeholder="">{{unUseSaleAttrList}}</el-input> -->
   </div>
 </template>
 
@@ -102,7 +134,7 @@ export default {
     //请求获取修改
     async getUpdataspuFormInitdata(row) {
       const result = await this.$API.spu.get(row.id);
-      console.log(result);
+      // console.log(result);
       if (result.code === 200) {
         this.spuInfo = result.data;
       }
@@ -136,8 +168,41 @@ export default {
         this.saleAttrList = saleAttrListresult.data;
       }
     }
+  },
+  computed: {
+    //根据所有的销售属性列表和spu
+    //
+    //从saleAttrList: [](总的)  中过滤spuInfo.spuSaleAttrList没有的
+    // 过滤失败,
+    unUseSaleAttrList() {
+      //三个return少了任何一个都不可以
+      return this.saleAttrList.filter(item => {
+       return this.spuInfo.spuSaleAttrList.every(spuSaleAttr => {
+          // console.log(spuSaleAttr.saleAttrName);
+          // console.log(item.name);
+          // console.log(spuSaleAttr.saleAttrName !== item.name);
+          return spuSaleAttr.saleAttrName !== item.name;
+        });
+      });
+    }
   }
 };
 </script>
 
-<style></style>
+<style>
+.el-tag + .el-tag {
+  margin-left: 10px;
+}
+.button-new-tag {
+  margin-left: 10px;
+  height: 32px;
+  line-height: 30px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.input-new-tag {
+  width: 90px;
+  margin-left: 10px;
+  vertical-align: bottom;
+}
+</style>
