@@ -3,7 +3,7 @@
     <el-card>
       <!-- 三级联动 -->
 
-      <CategorySelector @handlerCatgegory="handlerCatgegory"></CategorySelector>
+      <CategorySelector @handlerCategory="handlerCategory"></CategorySelector>
     </el-card>
     <el-card style="margin-top:20px">
       <div v-show="isShoeList">
@@ -135,7 +135,7 @@ export default {
     };
   },
   methods: {
-    handlerCatgegory({ categoryId, level }) {
+    handlerCategory({ categoryId, level }) {
       if (level === 1) {
         this.categary1Id = categoryId;
         this.categary2Id = "";

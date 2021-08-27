@@ -79,7 +79,7 @@ export default {
       this.category3List = [];
       this.cForm.categary2Id = "";
       this.cForm.categary3Id = "";
-        this.$emit('handlerCatgegory',{categoryId:category1Id,level:1})
+        this.$emit('handlerCategory',{categoryId:category1Id,level:1})
       const result = await this.$API.category.getCategory2(category1Id);
       if (result.code === 200) {
         this.category2List = result.data;
@@ -89,7 +89,7 @@ export default {
     async handleCategory2(category2Id) {
       this.category3List = [];
       this.cForm.categary3Id = "";
-      this.$emit('handlerCatgegory',{categoryId:category2Id,level:2})
+      this.$emit('handlerCategory',{categoryId:category2Id,level:2})
       const result = await this.$API.category.getCategory3(category2Id);
       if (result.code === 200) {
         this.category3List = result.data;
@@ -97,7 +97,7 @@ export default {
     },
     //选中昂3级分类列表
     handleCategory3(category3Id) {
-        this.$emit('handlerCatgegory',{categoryId:category3Id,level:3})
+        this.$emit('handlerCategory',{categoryId:category3Id,level:3})
     }
   }
 };
